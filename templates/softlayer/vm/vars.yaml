@@ -1,0 +1,41 @@
+
+
+# Set your IBM Softlayer username and api key.
+softlayer_username: "<Set your IBM Softlayer username>"
+softlayer_api_key: "<Set your IBM Softlayer api key>"
+
+
+# Set your IBM Softlayer VM info (Default values)
+hostname: softlayer-vm
+key_name: softlayer-key
+domain: sk.com
+datacenter: seo01
+os_reference_code: UBUNTU_16_64
+cores: 2
+memory: 4096
+disks: 100
+public_vlan_id: "<Set your IBM Softlayer public vlan id>"
+private_vlan_id: "<Set your IBM Softlayer private vlan id>"
+network_speed: 100
+hourly_billing: "true"
+local_disk: "false"
+private_network_only: "false"
+count: 1
+
+
+# Set your Cloud Z Composer info
+zcomposer_url: "http://localhost"
+userid: admin
+password: password
+inventory_name: softlayer
+
+
+# Default info
+temp_path: /tmp
+py_path: /var/lib/awx/src/auto_py
+tf_tempfile: createVM.tf
+tf_statefile: terraform.tfstate
+ssh_path: /home/admin/.ssh
+private_key: id_rsa
+public_key: "{{ lookup('file','{{ ssh_path }}/id_rsa.pub') }}"
+

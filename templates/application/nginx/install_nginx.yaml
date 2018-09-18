@@ -1,0 +1,7 @@
+- name: Install nginx playbook
+  hosts: all
+  gather_facts: false
+  become: yes
+  
+  roles:
+    - role: nginx

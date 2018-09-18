@@ -1,0 +1,81 @@
+- name: Linux Server Provisioning
+  hosts: all
+  gather_facts: false
+  become: yes
+  
+  tasks:
+  - name: Apt update and Install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python)
+    register: result
+  - debug:
+    var: result.stdout
+
+
+  - name: Check to see if pip is already installed
+    command: "pip --version"
+    ignore_errors: true
+    changed_when: false
+    register: pip_is_installed
+  - debug:
+    var: pip_is_installed.stdout    
+
+
+  - block:
+    - name: Download get-pip.py
+      get_url: url=https://bootstrap.pypa.io/get-pip.py  dest=/tmp
+      register: result
+    - debug:
+      var: result.stdout            
+    - name: install pip
+      command: "python /tmp/get-pip.py"
+      register: result
+    - debug:
+      var: result.stdout                 
+    - name: delete get-pip.py
+      file: state=absent path=/tmp/get-pip.py
+      register: result
+    - debug:
+      var: result.stdout          
+    when: pip_is_installed.rc != 0
+
+
+  - name: swap - remove current swaps from fstab
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/[\S]+\s+none\s+swap '
+      state: absent
+    register: result
+  - debug:
+    var: result.stdout
+
+
+  - name: Disable swap
+    command: swapoff -a
+    register: result
+  - debug:
+    var: result.stdout
+    
+
+  - name: Change SSH Port
+    lineinfile:
+          dest=/etc/ssh/sshd_config
+          regexp='^Port'
+          line="Port 2202"
+          state=present
+          backup=yes
+    register: result
+    notify:
+      - restart ssh
+  - debug:
+    var: result.stdout
+    
+
+  handlers:
+  - name: restart ssh
+    service:
+      name=sshd
+      state=restarted
+    register: result
+  - debug:
+    var: result.stdout    
+

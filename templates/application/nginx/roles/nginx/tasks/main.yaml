@@ -1,0 +1,50 @@
+- name: Install nginx in Ubuntu
+  apt:
+    name: nginx
+    state: present
+  register: result
+- debug:
+    var: result.stdout
+
+    
+- name: Start nginx and configure auto start
+  service:
+    name: nginx
+    state: started
+    enabled: true
+  register: result
+- debug:
+    var: result.stdout
+    
+
+- name: Use nginx.conf template 
+  template:
+    src: nginx.j2.conf
+    dest: /etc/nginx/nginx.conf
+  register: result
+  notify:
+    - nginx reload
+- debug:
+    var: result.stdout
+
+
+- name: Create nginx group
+  group:
+    name: "{{ nginx_group }}"
+    system: true
+  register: result
+- debug:
+    var: result.stdout
+    
+
+- name: Create nginx user
+  user:
+    name: "{{ nginx_user }}"
+    home: /var/lib/nginx
+    shell: /sbin/nologin
+    groups: "{{ nginx_group }}"
+    append: true
+    system: true
+  register: result
+- debug:
+    var: result.stdout
