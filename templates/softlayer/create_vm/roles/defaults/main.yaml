@@ -1,4 +1,4 @@
-# Set your IBM Softlayer username and api key.
+# Set your IBM Softlayer username and api key
 softlayer_username: "<Set your softlayer username>"
 softlayer_api_key: "<Set your softlayer api key>"
 
