@@ -7,7 +7,7 @@
     temp_path: "{{ temp_path.path }}"
 
 - name: Create terraform file
-  shell: python {{ py_path }}/create_softlayer-vm-tf.py {{ temp_path }} {{ tf_tempfile }} {{ softlayer_api_key }} {{ softlayer_username }} {{ count }} {{ hostname }} {{ domain }} {{ os_reference_code }} {{ datacenter }} {{ network_speed }} {{ hourly_billing }} {{ local_disk }} {{ private_network_only }} {{ cores }} {{ memory }} {{ disks }} {{ public_vlan_id }} {{ private_vlan_id }}
+  shell: python {{ py_path }}/create_softlayer-vm-tf.py {{ temp_path }} {{ tf_tempfile }} {{ softlayer_api_key }} {{ softlayer_username }} {{ count }} {{ key_name }} "{{ public_key }}" {{ hostname }} {{ domain }} {{ os_reference_code }} {{ datacenter }} {{ network_speed }} {{ hourly_billing }} {{ local_disk }} {{ private_network_only }} {{ cores }} {{ memory }} {{ disks }} {{ public_vlan_id }} {{ private_vlan_id }}
   register: result
 - debug:
     var: result.stdout   

@@ -3,9 +3,13 @@ softlayer_username: "<Set your softlayer username>"
 softlayer_api_key: "<Set your softlayer api key>"
 
 
+# Set your IBM Softlayer VM Connection SSH Public Key
+public_key: "<Set your SSH Public Key>"
+key_name: softlayer-key
+
+
 # Set your IBM Softlayer VM info (Default values)
 hostname: Softlayer-VM
-key_name: softlayer-key
 domain: sk.com
 datacenter: seo01
 os_reference_code: UBUNTU_16_64
